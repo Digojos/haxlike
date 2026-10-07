@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HaxLike</title>
+  </head>
+  <body>
+    <div id="app">
+      <header id="topbar">
+        <div class="scoreboard">
+          <span class="team-icon red"></span>
+          <span id="score-red">0</span>
+          <span class="dash">-</span>
+          <span id="score-blue">0</span>
+          <span class="team-icon blue"></span>
+        </div>
+        <div class="topbar-right">
+          <span id="ping" class="hidden"></span>
+          <span id="clock">00:00</span>
+        </div>
+      </header>
+      <main id="stage">
+        <canvas id="game"></canvas>
+        <div id="overlay">
+          <section id="menu" class="dialog">
+            <h1>HaxLike</h1>
+            <div class="dialog-body">
+              <button id="play-online">Jogar online</button>
+              <button data-mode="solo" class="secondary">Treino contra bot</button>
+              <button data-mode="versus" class="secondary">2 jogadores (mesmo teclado)</button>
+              <ul class="controls">
+                <li><b>Online e treino:</b> setas ou WASD para mover, X ou Espaço para chutar</li>
+                <li><b>2 jogadores:</b> Vermelho usa WASD + Espaço, Azul usa setas + Enter</li>
+                <li><b>Esc</b> volta ao menu (online: mostra/esconde a sala)</li>
+              </ul>
+            </div>
+          </section>
+
+          <section id="game-over" class="dialog hidden">
+            <h1 id="result-title">Fim de jogo</h1>
+            <div class="dialog-body">
+              <p id="result-score" class="big"></p>
+              <button id="play-again">Jogar de novo</button>
+              <button id="back-to-menu" class="secondary">Menu</button>
+            </div>
+          </section>
+
+          <section id="nick-dialog" class="dialog hidden">
+            <h1>Escolha seu nome</h1>
+            <form id="nick-form" class="dialog-body">
+              <input id="nick-input" maxlength="25" autocomplete="off" placeholder="Seu nick" required />
+              <p id="nick-error" class="error hidden"></p>
+              <button type="submit">Entrar</button>
+              <button type="button" id="nick-back" class="secondary">Voltar</button>
+            </form>
+          </section>
+
+          <section id="rooms-dialog" class="dialog wide hidden">
+            <h1>Salas</h1>
+            <div class="dialog-body">
+              <div class="room-list-wrap">
+                <table class="room-list">
+                  <thead>
+                    <tr><th>Nome</th><th>Jogadores</th><th>Status</th></tr>
+                  </thead>
+                  <tbody id="room-list"></tbody>
+                </table>
+                <p id="rooms-empty" class="muted">Nenhuma sala aberta. Crie a primeira!</p>
+              </div>
+              <p id="rooms-error" class="error hidden"></p>
+              <div class="button-row">
+                <button id="create-room">Criar sala</button>
+                <button id="refresh-rooms" class="secondary">Atualizar</button>
+                <button id="rooms-back" class="secondary">Sair</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="create-dialog" class="dialog hidden">
+            <h1>Criar sala</h1>
+            <form id="create-form" class="dialog-body">
+              <input id="room-name-input" maxlength="40" autocomplete="off" placeholder="Nome da sala" />
+              <button type="submit">Criar</button>
+              <button type="button" id="create-cancel" class="secondary">Cancelar</button>
+            </form>
+          </section>
+
+          <section id="room-dialog" class="dialog wide hidden">
+            <h1 id="room-title">Sala</h1>
+            <div class="dialog-body">
+              <div class="teams">
+                <div class="team-column red">
+                  <h2>Vermelho</h2>
+                  <ul id="team-red"></ul>
+                  <button data-join="red" class="secondary">Entrar</button>
+                </div>
+                <div class="team-column spec">
+                  <h2>Espectadores</h2>
+                  <ul id="team-spec"></ul>
+                  <button data-join="spec" class="secondary">Entrar</button>
+                </div>
+                <div class="team-column blue">
+                  <h2>Azul</h2>
+                  <ul id="team-blue"></ul>
+                  <button data-join="blue" class="secondary">Entrar</button>
+                </div>
+              </div>
+              <div class="room-settings">
+                <label>Tempo
+                  <select id="time-limit">
+                    <option value="0">Sem limite</option>
+                    <option value="1">1 min</option>
+                    <option value="2">2 min</option>
+                    <option value="3">3 min</option>
+                    <option value="5">5 min</option>
+                    <option value="10">10 min</option>
+                  </select>
+                </label>
+                <label>Gols
+                  <select id="score-limit">
+                    <option value="0">Sem limite</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="7">7</option>
+                    <option value="10">10</option>
+                  </select>
+                </label>
+              </div>
+              <div class="button-row">
+                <button id="start-stop">Iniciar partida</button>
+                <button id="leave-room" class="secondary">Sair da sala</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+      <section id="chat" class="hidden">
+        <div id="chat-log"></div>
+        <input id="chat-input" maxlength="140" autocomplete="off" placeholder="Pressione Enter para conversar (/avatar XX muda seu avatar)" />
+      </section>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

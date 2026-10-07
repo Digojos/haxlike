@@ -1,0 +1,350 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #1a2125;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 16px;
+  background: #1a2125;
+  border-bottom: 1px solid #111619;
+  font-weight: bold;
+  font-size: 20px;
+  user-select: none;
+}
+
+.scoreboard {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.team-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+}
+.team-icon.red {
+  background: #e56e56;
+}
+.team-icon.blue {
+  background: #5689e5;
+}
+
+#clock {
+  font-variant-numeric: tabular-nums;
+}
+#clock.overtime {
+  color: #e56e56;
+}
+
+#stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+#game {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.dialog {
+  width: min(420px, calc(100% - 32px));
+  background: #1a2125;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.dialog h1 {
+  margin: 0;
+  padding: 10px 14px;
+  background: #111619;
+  font-size: 18px;
+}
+
+.dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+}
+
+.dialog p {
+  margin: 0;
+}
+.dialog p.big {
+  margin-bottom: 6px;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+}
+.dialog.wide {
+  width: min(640px, calc(100% - 32px));
+}
+.dialog input,
+.dialog select {
+  padding: 8px;
+  border: 1px solid #3a4249;
+  border-radius: 3px;
+  background: #111619;
+  color: #fff;
+  font: 15px Arial, Helvetica, sans-serif;
+}
+.dialog button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.error {
+  color: #ff8a7a;
+  font-size: 13px;
+}
+.muted {
+  color: #8d989f;
+  font-size: 13px;
+  text-align: center;
+}
+.button-row {
+  display: flex;
+  gap: 8px;
+}
+.button-row button {
+  flex: 1;
+}
+
+.dialog button {
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  background: #244967;
+  color: #fff;
+  font: bold 15px Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+.dialog button:hover {
+  background: #2f5f86;
+}
+.dialog button.secondary {
+  background: #3a4249;
+}
+.dialog button.secondary:hover {
+  background: #4a545c;
+}
+
+.controls {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  color: #b9c3c9;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Room list */
+.room-list-wrap {
+  max-height: 300px;
+  overflow-y: auto;
+  background: #111619;
+  border-radius: 3px;
+}
+.room-list {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.room-list th {
+  position: sticky;
+  top: 0;
+  padding: 6px 10px;
+  background: #0b0f11;
+  color: #8d989f;
+  font-weight: normal;
+  text-align: left;
+}
+.room-list td {
+  padding: 8px 10px;
+  border-top: 1px solid #1f282d;
+  overflow-wrap: anywhere;
+}
+.room-list tbody tr {
+  cursor: pointer;
+}
+.room-list tbody tr:hover {
+  background: #244967;
+}
+.room-list-wrap .muted {
+  padding: 16px;
+}
+
+/* Room screen */
+.teams {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.team-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 8px;
+  background: #111619;
+  border-radius: 3px;
+}
+.team-column h2 {
+  margin: 0;
+  font-size: 14px;
+}
+.team-column.red h2 {
+  color: #e56e56;
+}
+.team-column.blue h2 {
+  color: #5689e5;
+}
+.team-column.spec h2 {
+  color: #b9c3c9;
+}
+.team-column ul {
+  flex: 1;
+  min-height: 120px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+}
+.team-column li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 0;
+}
+.team-column li.me .name {
+  font-weight: bold;
+}
+.team-column .name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.team-column .admin-badge {
+  color: #f5c542;
+}
+.team-column .ping {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: #8d989f;
+}
+.team-column .ping.good {
+  color: #7fd17f;
+}
+.team-column .ping.ok {
+  color: #f5c542;
+}
+.team-column .ping.bad {
+  color: #ff8a7a;
+}
+.dialog button.move {
+  padding: 0 4px;
+  background: none;
+  color: #8d989f;
+  font-size: 11px;
+}
+.dialog button.move:hover {
+  background: none;
+  color: #fff;
+}
+.room-settings {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: #b9c3c9;
+}
+.room-settings label {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Chat */
+#chat {
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  background: #1a2125;
+  border-top: 1px solid #111619;
+}
+#chat-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+#chat-log .system {
+  color: #8d989f;
+}
+#chat-input {
+  margin: 0 8px 8px;
+  padding: 7px 10px;
+  border: 1px solid #3a4249;
+  border-radius: 3px;
+  background: #111619;
+  color: #fff;
+  font: 13px Arial, Helvetica, sans-serif;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+#ping {
+  color: #8d989f;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+@media (max-width: 560px) {
+  .teams {
+    grid-template-columns: 1fr;
+  }
+  .team-column ul {
+    min-height: 0;
+  }
+}

@@ -1,0 +1,11 @@
+services:
+  haxlike:
+    build: .
+    image: haxlike:latest
+    container_name: haxlike
+    ports:
+      # On a server behind nginx, set BIND_ADDRESS=127.0.0.1 so the port is only reachable through the proxy.
+      - "${BIND_ADDRESS:-0.0.0.0}:${HOST_PORT:-8787}:8787"
+    environment:
+      PORT: 8787
+    restart: unless-stopped

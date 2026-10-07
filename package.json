@@ -1,0 +1,22 @@
+{
+  "name": "haxlike",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --clear-screen=false server/index.ts",
+    "build": "tsc && vite build",
+    "start": "tsx server/index.ts --prod",
+    "typecheck": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/ws": "^8.18.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.3"
+  },
+  "dependencies": {
+    "tsx": "^4.23.15",
+    "ws": "^8.22.0"
+  }
+}
